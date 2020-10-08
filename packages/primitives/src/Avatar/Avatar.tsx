@@ -17,54 +17,6 @@ enum ImageState {
 }
 
 // From material-ui https://github.com/mui-org/material-ui/blob/master/packages/material-ui/src/Avatar/Avatar.js
-function useLoadImage({
-  src,
-  srcSet,
-}: {
-  src?: AvatarProps['src']
-  srcSet?: AvatarProps['srcSet']
-}) {
-  const [imageState, setImageState] = React.useState(ImageState.initial)
-
-  React.useEffect(() => {
-    if (!src && !srcSet) {
-      return undefined
-    }
-
-    setImageState(ImageState.initial)
-
-    let active = true
-    const image = new Image()
-
-    if (typeof src === 'string') {
-      image.src = src
-    }
-
-    if (typeof srcSet === 'string') {
-      image.srcset = srcSet
-    }
-
-    image.onload = () => {
-      if (!active) {
-        return
-      }
-      setImageState(ImageState.loaded)
-    }
-
-    image.onerror = () => {
-      if (!active) {
-        return
-      }
-      setImageState(ImageState.error)
-    }
-
-    return () => {
-      active = false
-    }
-  }, [src, srcSet])
-
-  return { imageState }
-}
 
 export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
   function Avatar(
